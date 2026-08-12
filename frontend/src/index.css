@@ -1,0 +1,66 @@
+/* @import url() FONT IMPORTS MUST ALWAYS BE AT THE VERY TOP OF THIS FILE, ABOVE THE TAILWIND IMPORTS — DO NOT DELETE THIS COMMENT */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
+/* CRITICAL: THE FOLLOWING TAILWIND IMPORTS MUST NEVER BE DELETED OR REORDERED — DO NOT DELETE THIS COMMENT */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* END TAILWIND IMPORTS — ALL OTHER CSS MUST GO BELOW THIS LINE */
+
+:root {
+  --c-canvas: 248 250 252;
+  --c-surface: 255 255 255;
+  --c-subtle: 241 245 249;
+  --c-line: 226 232 240;
+  --c-ink: 15 23 42;
+  --c-muted: 100 116 139;
+  --c-brand-tint: 239 246 255;
+}
+.dark {
+  --c-canvas: 8 12 22;
+  --c-surface: 17 24 39;
+  --c-subtle: 30 41 59;
+  --c-line: 42 54 74;
+  --c-ink: 241 245 249;
+  --c-muted: 148 163 184;
+  --c-brand-tint: 23 37 66;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  background-color: rgb(var(--c-canvas));
+  color: rgb(var(--c-ink));
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  letter-spacing: -0.02em;
+}
+*:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.atlas-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.atlas-scroll::-webkit-scrollbar-thumb {
+  background: rgb(var(--c-line));
+  border-radius: 999px;
+}
