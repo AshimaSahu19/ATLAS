@@ -6,6 +6,7 @@ import { Button, EmptyState, Tabs } from '../components/ui/Primitives';
 import { Modal } from '../components/ui/Overlays';
 import { useAtlas } from '../contexts/AtlasContext';
 import { Trip } from '../types';
+import { deleteTrip } from "../services/atlasApi";
 
 export function TripsPage() {
   const { trips, removeTrip } = useAtlas();
@@ -14,6 +15,16 @@ export function TripsPage() {
   const navigate = useNavigate();
 
   const filtered = trips.filter((t) => t.status === tab);
+  const handleDeleteConfirm = async () => {
+  if (!pendingDelete) return;
+
+  try {
+    await removeTrip(pendingDelete.id);
+    setPendingDelete(null);
+  } catch (error) {
+    console.error('Trip delete karne mein issue aaya:', error);
+  }
+};
 
   return (
     <div className="space-y-6">
@@ -53,31 +64,26 @@ export function TripsPage() {
       }
 
       <Modal
-        open={Boolean(pendingDelete)}
-        onClose={() => setPendingDelete(null)}
-        title="Delete this trip?"
-        description="The itinerary and all its saved days will be removed."
-        footer={
-        <>
-            <Button variant="ghost" onClick={() => setPendingDelete(null)}>
-              Keep trip
-            </Button>
-            <Button
-            variant="danger"
-            onClick={() => {
-              if (pendingDelete) removeTrip(pendingDelete.id);
-              setPendingDelete(null);
-            }}>
-            
-              Delete trip
-            </Button>
-          </>
-        }>
-        
-        <p className="text-[14px] text-muted">
-          {pendingDelete?.destination} · This cannot be undone in the prototype.
-        </p>
-      </Modal>
-    </div>);
+  open={Boolean(pendingDelete)}
+  onClose={() => setPendingDelete(null)}
+  title="Delete this trip?"
+  description="The itinerary and all its saved days will be removed."
+  footer={
+    <>
+      <Button variant="ghost" onClick={() => setPendingDelete(null)}>
+        Keep trip
+      </Button>
 
+      <Button variant="danger" onClick={handleDeleteConfirm}>
+        Delete trip
+      </Button>
+    </>
+  }
+>
+  <p className="text-[14px] text-muted">
+    {pendingDelete?.destination} · This cannot be undone in the prototype.
+  </p>
+</Modal>
+</div>
+);
 }
